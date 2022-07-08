@@ -1,0 +1,14 @@
+title Exercise 0.6
+
+note over browser
+The user types something in the text field
+end note
+
+note over browser
+When the form button is clicked, 
+the browser will send the user 
+input to the server
+end note
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+server-->browser: {content: "Nota nueva", date: "2022-07-08T22:47:14.586Z"}
