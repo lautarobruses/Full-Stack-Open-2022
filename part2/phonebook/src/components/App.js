@@ -48,7 +48,10 @@ const App = () => {
             }, 5000);
           })
           .catch(error => {
-            setErrorMessage(error.response.data)
+            setErrorMessage(error.response.data.error)
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 5000);
           })
       }
     }
@@ -81,12 +84,12 @@ const App = () => {
         }, 5000);
       })
       .catch(error => {
-        setErrorMessage(error.response.data)
+        setErrorMessage(error.response.data.error)
         //setErrorMessage(`Contact ${changedContact.name} was already removed from server`)
         setTimeout(() => {
           setErrorMessage(null)
         }, 5000);
-        setPersons(persons.filter(n => n.id !== changedContact.id))
+        //setPersons(persons.filter(n => n.id !== changedContact.id))
       })
 
   }
