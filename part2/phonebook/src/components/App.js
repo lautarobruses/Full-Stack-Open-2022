@@ -7,7 +7,7 @@ import Notification from './Notification'
 import Error from './Error'
 
 const App = () => {
-  const [persons, setPersons] = useState([])
+  const [ persons, setPersons ] = useState([])
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ filter, setFilter ] = useState('')
@@ -46,7 +46,10 @@ const App = () => {
             setTimeout(() => {
               setNotificationMessage(null)
             }, 5000);
-          })   
+          })
+          .catch(error => {
+            setErrorMessage(error.response.data)
+          })
       }
     }
   }
@@ -78,7 +81,8 @@ const App = () => {
         }, 5000);
       })
       .catch(error => {
-        setErrorMessage(`Contact ${changedContact.name} was already removed from server`)
+        setErrorMessage(error.response.data)
+        //setErrorMessage(`Contact ${changedContact.name} was already removed from server`)
         setTimeout(() => {
           setErrorMessage(null)
         }, 5000);
