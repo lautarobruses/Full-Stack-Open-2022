@@ -1,6 +1,6 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-//Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlJhbmR5eCIsImlkIjoiNjJlZDkxYzljNWNjZWRkYjA2YTE1YzQ4IiwiaWF0IjoxNjU5NzM2NTQxfQ.fcJga8cOnV9vxouZGuE1Q75ZSF3wGR-2-UPdImIAvUM
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlJhbmR5eCIsImlkIjoiNjJlZDkxYzljNWNjZWRkYjA2YTE1YzQ4IiwiaWF0IjoxNjU5Nzk2OTI4fQ.H3RvUx0h2XyHkzpSAPxbR1S047zkj6gKfEILCNRri3Y
 
 {
     "title": "Anchor",

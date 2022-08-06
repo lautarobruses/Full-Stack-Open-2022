@@ -34,13 +34,13 @@ describe('POST tests', () => {
             likes: 9999,
         }
 
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkxhdXRhcm8iLCJpZCI6IjYyZWRhY2YxNWZkZjY2OGYwYzhiYTEyYyIsImlhdCI6MTY1OTc0NDE3OH0.6QS-0DRs4-o8Qm51H8rhSf1lng1XujDOaXBUFUaS3os'
+        const token = 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkxhdXRhcm8iLCJpZCI6IjYyZWRhY2YxNWZkZjY2OGYwYzhiYTEyYyIsImlhdCI6MTY1OTc0NDE3OH0.6QS-0DRs4-o8Qm51H8rhSf1lng1XujDOaXBUFUaS3os'
 
         await api
             .post('/api/blogs')
             .send(newBlog)
             .set({ Authorization: token })
-            .expect(200)
+            .expect(201)
             .expect('Content-Type', /application\/json/)
 
         const response = await api.get('/api/blogs')
@@ -58,13 +58,13 @@ describe('POST tests', () => {
             url: 'https://www.test.com/',
         }
 
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkxhdXRhcm8iLCJpZCI6IjYyZWRhY2YxNWZkZjY2OGYwYzhiYTEyYyIsImlhdCI6MTY1OTc0NDE3OH0.6QS-0DRs4-o8Qm51H8rhSf1lng1XujDOaXBUFUaS3os'
+        const token = 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkxhdXRhcm8iLCJpZCI6IjYyZWRhY2YxNWZkZjY2OGYwYzhiYTEyYyIsImlhdCI6MTY1OTc0NDE3OH0.6QS-0DRs4-o8Qm51H8rhSf1lng1XujDOaXBUFUaS3os'
 
         await api
             .post('/api/blogs')
             .send(newBlog)
             .set({ Authorization: token })
-            .expect(200)
+            .expect(201)
             .expect('Content-Type', /application\/json/)
 
         const response = await api.get('/api/blogs')
@@ -80,7 +80,7 @@ describe('POST tests', () => {
             likes: 999,
         }
 
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkxhdXRhcm8iLCJpZCI6IjYyZWRhY2YxNWZkZjY2OGYwYzhiYTEyYyIsImlhdCI6MTY1OTc0NDE3OH0.6QS-0DRs4-o8Qm51H8rhSf1lng1XujDOaXBUFUaS3os'
+        const token = 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkxhdXRhcm8iLCJpZCI6IjYyZWRhY2YxNWZkZjY2OGYwYzhiYTEyYyIsImlhdCI6MTY1OTc0NDE3OH0.6QS-0DRs4-o8Qm51H8rhSf1lng1XujDOaXBUFUaS3os'
 
         await api
             .post('/api/blogs')
@@ -97,7 +97,7 @@ describe('POST tests', () => {
             likes: 9999,
         }
 
-        const token = 'a_bad_token'
+        const token = 'bearer a_bad_token'
 
         await api
             .post('/api/blogs')
