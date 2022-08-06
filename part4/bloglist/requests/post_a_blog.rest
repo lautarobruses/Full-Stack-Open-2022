@@ -1,9 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+//Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlJhbmR5eCIsImlkIjoiNjJlZDkxYzljNWNjZWRkYjA2YTE1YzQ4IiwiaWF0IjoxNjU5NzM2NTQxfQ.fcJga8cOnV9vxouZGuE1Q75ZSF3wGR-2-UPdImIAvUM
 
 {
-    "title": "Hola",
-    "author": "Yop",
-    "url": "hola.com.ar",
-    "likes": 100
+    "title": "Anchor",
+    "author": "Idk",
+    "url": "https://app.anchorprotocol.com/",
+    "likes": 1
 }

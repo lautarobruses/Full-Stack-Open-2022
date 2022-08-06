@@ -29,15 +29,60 @@ const favoriteBlog = (blogs) => {
     }
 }
 
-const mostBlog = (blogs) => { //TERMINAR (4.6)
-    const groups = blogs.groupBy(blogs, blogs.author)
+const mostBlog = (blogs) => {
+    let filteredAuthors = []
+    let result = {
+        author: '',
+        blogs: 0
+    }
 
-    console.log(groups)
+    for(let i = 0; i < blogs.length; i++) {
+        let j = 0
+
+        while (j < filteredAuthors.length && filteredAuthors[j].author !== blogs[i].author) {
+            j++
+        }
+
+        if(filteredAuthors[j]?.author === blogs[i].author) {
+            filteredAuthors[j].blogs++
+        } else {
+            filteredAuthors[j] = { author: blogs[i].author, blogs: 1 }
+        }
+    }
+
+    filteredAuthors.forEach(element => {
+        element.blogs > result.blogs && (result = element)
+    })
+
+    return result
 }
 
-const mostLikes= (blogs) => { //TERMINAR (4.7)
+const mostLikes = (blogs) => {
+    let filteredAuthors = []
+    let result = {
+        author: '',
+        likes: 0
+    }
 
-    console.log(blogs)
+    for(let i = 0; i < blogs.length; i++) {
+        let j = 0
+
+        while (j < filteredAuthors.length && filteredAuthors[j].author !== blogs[i].author) {
+            j++
+        }
+
+        if(filteredAuthors[j]?.author === blogs[i].author) {
+            filteredAuthors[j].likes += blogs[i].likes
+        } else {
+            filteredAuthors[j] = { author: blogs[i].author, likes: blogs[i].likes }
+        }
+    }
+
+    filteredAuthors.forEach(element => {
+        element.likes > result.likes && (result = element)
+    })
+
+    return result
 }
 
 module.exports = {

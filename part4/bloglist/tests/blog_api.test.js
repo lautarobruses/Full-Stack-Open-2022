@@ -31,12 +31,15 @@ describe('POST tests', () => {
             title: 'blog test',
             author: 'test author',
             url: 'https://www.test.com/',
-            likes: 999,
+            likes: 9999,
         }
+
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkxhdXRhcm8iLCJpZCI6IjYyZWRhY2YxNWZkZjY2OGYwYzhiYTEyYyIsImlhdCI6MTY1OTc0NDE3OH0.6QS-0DRs4-o8Qm51H8rhSf1lng1XujDOaXBUFUaS3os'
 
         await api
             .post('/api/blogs')
             .send(newBlog)
+            .set({ Authorization: token })
             .expect(200)
             .expect('Content-Type', /application\/json/)
 
@@ -55,9 +58,12 @@ describe('POST tests', () => {
             url: 'https://www.test.com/',
         }
 
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkxhdXRhcm8iLCJpZCI6IjYyZWRhY2YxNWZkZjY2OGYwYzhiYTEyYyIsImlhdCI6MTY1OTc0NDE3OH0.6QS-0DRs4-o8Qm51H8rhSf1lng1XujDOaXBUFUaS3os'
+
         await api
             .post('/api/blogs')
             .send(newBlog)
+            .set({ Authorization: token })
             .expect(200)
             .expect('Content-Type', /application\/json/)
 
@@ -74,10 +80,30 @@ describe('POST tests', () => {
             likes: 999,
         }
 
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkxhdXRhcm8iLCJpZCI6IjYyZWRhY2YxNWZkZjY2OGYwYzhiYTEyYyIsImlhdCI6MTY1OTc0NDE3OH0.6QS-0DRs4-o8Qm51H8rhSf1lng1XujDOaXBUFUaS3os'
+
         await api
             .post('/api/blogs')
             .send(newBlog)
+            .set({ Authorization: token })
             .expect(400)
+    })
+
+    test('blog with an invalid token is answered with the 401 status code', async () => {
+        const newBlog = {
+            title: 'blog test',
+            author: 'test author',
+            url: 'https://www.test.com/',
+            likes: 9999,
+        }
+
+        const token = 'a_bad_token'
+
+        await api
+            .post('/api/blogs')
+            .send(newBlog)
+            .set({ Authorization: token })
+            .expect(401)
     })
 })
 
@@ -98,7 +124,7 @@ describe('USERS tests', () => {
         expect(result.body.error).toContain('password too short')
 
         const response = await api.get('/api/users')
-        expect(response.body).toHaveLength(1)
+        expect(response.body).toHaveLength(2)
     })
 
     test('creation fails with proper statuscode and message if username already taken', async () => {
@@ -117,7 +143,19 @@ describe('USERS tests', () => {
         expect(result.body.error).toContain('`username` to be unique')
 
         const response = await api.get('/api/users')
-        expect(response.body).toHaveLength(1)
+        expect(response.body).toHaveLength(2)
+    })
+
+    test('a valid user login', async () => {
+        const validUser = {
+            username: 'Lautaro',
+            password: '00000',
+        }
+
+        await api
+            .post('/api/login')
+            .send(validUser)
+            .expect(200)
     })
 })
 
