@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
-import Blog from './components/Blog'
-import blogService from './services/blogs'
-import loginService from './services/login' 
+import Blog from './Blog'
+import Error from './Error'
+import Notification from './Notification'
+import blogService from '../services/blogs'
+import loginService from '../services/login' 
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -11,6 +13,8 @@ const App = () => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
+  const [notification, setNotification] = useState(null)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
@@ -39,11 +43,15 @@ const App = () => {
       window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user)) 
       blogService.setToken(user.token)
       setUser(user)
-      setUsername('')
-      setPassword('')
     } catch (exception) {
-      console.error('Wrong credentials')
+      setError('wrong username or password')
+      setTimeout(() => {
+        setError(null)
+      }, 5000)
     }
+
+    setUsername('')
+    setPassword('')
   }
 
   const handleLogout = async (event) => {
@@ -61,8 +69,22 @@ const App = () => {
       id: blogs.length + 1,
     }
 
-    const returnedBlog = await blogService.create(blogObject)
-    setBlogs(blogs.concat(returnedBlog))
+    try {
+      const returnedBlog = await blogService.create(blogObject)
+      setBlogs(blogs.concat(returnedBlog))
+      
+      setNotification(`added a new blog: ${returnedBlog.title} by ${returnedBlog.author}` )
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000);
+    } catch (exception) {
+      console.log(exception.response.data.error)
+      setError(exception.response.data.error)
+      setTimeout(() => {
+        setError(null)
+      }, 5000)
+    }
+
     setTitle('')
     setAuthor('')
     setUrl('')
@@ -72,9 +94,10 @@ const App = () => {
     return (
       <>
         <h1>log in to application</h1>
+        <Error message={error} />
         <form onSubmit={handleLogin}>
           <div>
-            username
+            username: 
               <input
               type="text"
               value={username}
@@ -83,7 +106,7 @@ const App = () => {
             />
           </div>
           <div>
-            password
+            password: 
               <input
               type="password"
               value={password}
@@ -101,6 +124,8 @@ const App = () => {
     return (
       <>
         <h2>blogs</h2>
+        <Notification message={notification} />
+        <Error message={error} />
         <p>{user.name} logged in</p>
         <button onClick={handleLogout}>logout</button>
 
@@ -109,7 +134,7 @@ const App = () => {
         <h2>create new</h2>
         <form onSubmit={handleCreateBlog}>
           <div>
-            title
+            title: 
               <input
               type="text"
               value={title}
@@ -118,7 +143,7 @@ const App = () => {
             />
           </div>
           <div>
-            author
+            author: 
               <input
               type="text"
               value={author}
@@ -127,7 +152,7 @@ const App = () => {
             />
           </div>
           <div>
-            url
+            url: 
               <input
               type="text"
               value={url}
