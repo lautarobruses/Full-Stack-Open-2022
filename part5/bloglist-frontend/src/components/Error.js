@@ -1,4 +1,4 @@
-const Error = ({message}) => {
+const Error = ({ message }) => {
     const errorStyle = {
         color: 'red',
         background: 'lightgrey',
@@ -9,7 +9,7 @@ const Error = ({message}) => {
         marginBottom: 10
     }
 
-    if (message === null) 
+    if (message === null)
         return null
     else
         return <div style={errorStyle}>{message}</div>
