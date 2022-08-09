@@ -19,10 +19,11 @@ const App = () => {
   useEffect(() => {
     blogService
       .getAll()
-      .then(blogs =>
-        setBlogs( blogs )
-      )  
-  }, [])
+      .then(blogs => {
+        const sortedBlogs = blogs.sort((a, b) =>  b.likes - a.likes)
+        setBlogs(sortedBlogs)
+      })  
+  }, [blogs])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -38,9 +39,7 @@ const App = () => {
     event.preventDefault()
     
     try {
-      const user = await loginService.login({
-        username, password,
-      })
+      const user = await loginService.login({username, password,})
 
       setUser(user)
       blogService.setToken(user.token)
@@ -66,7 +65,10 @@ const App = () => {
 
   const addBlog = (blogObject) => {
     blogFormRef.current.toggleVisibility()
-
+    blogObject.user = {
+      name: user.name,
+      username: user.username
+    }
     blogService
       .create(blogObject)
       .then(returnedBlog => {
@@ -82,6 +84,32 @@ const App = () => {
           setError(null)
         }, 5000)
       })
+  }
+
+  const increaseLikesOf = id => {
+    const blog = blogs.find(n => n.id === id)
+    const changedBlog = { ...blog, likes: blog.likes + 1 }
+
+    blogService
+      .update(blog.id, changedBlog)
+      .then(returnedBlog => {
+        const updatedBlogs = blogs.map(blog => blog.id !== id ? blog : returnedBlog)
+        setBlogs(updatedBlogs.sort((a, b) =>  b.likes - a.likes))
+      })
+  }
+
+  const deleteBlogOf = id => {
+    const blog = blogs.find(n => n.id === id)
+    const result = window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)
+
+    if (result) {
+      blogService.deleteIt(id)
+      setBlogs(blogs.filter(blog => blog.id !== id))
+      setNotification(`Removed ${blog.title}`)
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000);
+    }
   }
 
   const blogFormRef = useRef()
@@ -111,10 +139,14 @@ const App = () => {
           <Togglable buttonLabel='new blog' ref={blogFormRef}>
             <BlogForm createBlog={addBlog}/>
           </Togglable>
+          <br></br>
           {blogs.map(blog =>
             <Blog 
               key={blog.id} 
-              blog={blog} 
+              blog={blog}
+              username={user.username} 
+              increaseLikes={() => increaseLikesOf(blog.id)}
+              deleteBlog={() => deleteBlogOf(blog.id)}
             />
           )}
         </div>

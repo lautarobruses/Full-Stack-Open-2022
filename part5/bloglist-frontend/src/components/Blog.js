@@ -1,7 +1,6 @@
 import { useState } from "react"
 
-const Blog = ({ blog }) => {
-  const [ likes, setLikes ] = useState(blog.likes)
+const Blog = ({ blog, username, increaseLikes, deleteBlog }) => {
   const [ detailsVisible, setDetailsVisible ] = useState(false)
   const [ buttonLabel, setButtonLabel ] = useState('view')
   const blogStyle = {
@@ -21,14 +20,6 @@ const Blog = ({ blog }) => {
       : setButtonLabel('view')
   }
 
-  //The likes state is not persist in the db :/
-  //It's only decorative
-  const handleLikeChange = (event) => {
-    event.preventDefault()
-    
-    setLikes(likes + 1)
-  }
-  
   return (
     <div style={blogStyle}>
       <div>
@@ -39,10 +30,11 @@ const Blog = ({ blog }) => {
         <div>
           <p>{blog.url}</p>
           <div>
-              likes: {likes} 
-              <button onClick={handleLikeChange}>like</button>
+              likes: {blog.likes} 
+              <button onClick={increaseLikes}>like</button>
           </div>
-          <p>{blog.user.username}  </p>
+          <p>{blog.user.username}</p>
+          {username === blog.user.username && <button onClick={deleteBlog}>remove</button>}
         </div>
       }
       
