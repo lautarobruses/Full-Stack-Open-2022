@@ -56,7 +56,7 @@ const App = () => {
     setPassword('')
   }
 
-  const handleLogout = async (event) => {
+  const handleLogout = (event) => {
     event.preventDefault()
 
     window.localStorage.removeItem('loggedBlogappUser')
@@ -104,8 +104,10 @@ const App = () => {
           />
         </Togglable> :
         <div>
-          <p>{user.name} logged in</p>
-          <button onClick={handleLogout}>logout</button>
+          <p>
+            {user.name} logged in
+            <button onClick={handleLogout}>logout</button>  
+          </p>
           <Togglable buttonLabel='new blog' ref={blogFormRef}>
             <BlogForm createBlog={addBlog}/>
           </Togglable>
