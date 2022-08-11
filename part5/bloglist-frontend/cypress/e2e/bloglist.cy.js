@@ -67,5 +67,17 @@ describe('Blog app', function() {
             cy.get('#create-button').click()
             cy.contains('test title blog')
         })
+
+        it.only('A vlog can be liked', function () {
+            cy.contains('new blog').click()
+            cy.get('#title').type('test title blog')
+            cy.get('#author').type('test author')
+            cy.get('#url').type('https://url.test.com')
+            cy.get('#create-button').click()
+
+            cy.get('#view-hide-button').click()
+            cy.contains('likes:')
+            cy.get('#like-button').click()
+        })
     })
 })

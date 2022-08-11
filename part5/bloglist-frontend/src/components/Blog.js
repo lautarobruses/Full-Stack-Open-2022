@@ -26,13 +26,13 @@ const Blog = ({ blog, username, increaseLikes, deleteBlog }) => {
         <div style={blogStyle} className='blog'>
             <div>
                 {blog.title} by {blog.author}
-                <button onClick={toggleVisibility}>{buttonLabel}</button>
+                <button id='view-hide-button' onClick={toggleVisibility}>{buttonLabel}</button>
             </div>
             <div style={showWhenVisible} className='togglableContent'>
                 <div>{blog.url}</div>
                 <div>
                 likes: {blog.likes}
-                    <button onClick={increaseLikes}>like</button>
+                    <button id='like-button' onClick={increaseLikes}>like</button>
                 </div>
                 <p>{blog.user.username}</p>
                 {username === blog.user.username && <button onClick={deleteBlog}>remove</button>}
