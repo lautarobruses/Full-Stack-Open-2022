@@ -8,9 +8,9 @@
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "lint": "eslint .",
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
-    "build:ui": "rm -rf build && cd C:/Users/Lautaro/Documents/GitHub/Full-Stack-Open-2022-/part5/bloglist-frontend && npm run build --prod && cp -r build C:/Users/Lautaro/Documents/GitHub/Full-Stack-Open-2022-/part5/bloglist-backend"
+    "build:ui": "rm -rf build && cd C:/Users/Lautaro/Documents/GitHub/Full-Stack-Open-2022-/part5/bloglist-frontend && npm run build --prod && cp -r build C:/Users/Lautaro/Documents/GitHub/Full-Stack-Open-2022-/part5/bloglist-backend",
+    "start:test": "cross-env NODE_ENV=test node index.js"
   },
-  "proxy": "http://localhost:3001",
   "author": "",
   "license": "ISC",
   "dependencies": {

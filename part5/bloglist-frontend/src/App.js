@@ -23,7 +23,7 @@ const App = () => {
                 const sortedBlogs = blogs.sort((a, b) =>  b.likes - a.likes)
                 setBlogs(sortedBlogs)
             })
-    }, [blogs])
+    }, [/*blogs*/]) //<<==this parameter make infinite the Cypress test
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
