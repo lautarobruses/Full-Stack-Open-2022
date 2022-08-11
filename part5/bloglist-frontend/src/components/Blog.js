@@ -20,23 +20,23 @@ const Blog = ({ blog, username, increaseLikes, deleteBlog }) => {
             : setButtonLabel('view')
     }
 
+    const showWhenVisible = { display: detailsVisible ? '' : 'none' }
+
     return (
-        <div style={blogStyle}>
+        <div style={blogStyle} className='blog'>
             <div>
                 {blog.title} by {blog.author}
                 <button onClick={toggleVisibility}>{buttonLabel}</button>
             </div>
-            {detailsVisible &&
-              <div>
-                  <p>{blog.url}</p>
-                  <div>
-                    likes: {blog.likes}
-                      <button onClick={increaseLikes}>like</button>
-                  </div>
-                  <p>{blog.user.username}</p>
-                  {username === blog.user.username && <button onClick={deleteBlog}>remove</button>}
-              </div>
-            }
+            <div style={showWhenVisible} className='togglableContent'>
+                <div>{blog.url}</div>
+                <div>
+                likes: {blog.likes}
+                    <button onClick={increaseLikes}>like</button>
+                </div>
+                <p>{blog.user.username}</p>
+                {username === blog.user.username && <button onClick={deleteBlog}>remove</button>}
+            </div>
         </div>
     )
 }
