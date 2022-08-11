@@ -12,7 +12,7 @@ const Error = ({ message }) => {
     if (message === null)
         return null
     else
-        return <div style={errorStyle}>{message}</div>
+        return <div className="error" style={errorStyle}>{message}</div>
 }
 
 export default Error
