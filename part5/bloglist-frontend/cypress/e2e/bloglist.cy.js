@@ -50,4 +50,22 @@ describe('Blog app', function() {
             cy.get('html').should('not.contain', 'Lautaro logged in')
         })
     })
+
+    describe('When logged in', function() {
+        beforeEach(function() {
+            cy.contains('login').click()
+            cy.get('#username').type('MouGliXx')
+            cy.get('#password').type('123')
+            cy.get('#login-button').click()
+        })
+
+        it('A blog can be created', function() {
+            cy.contains('new blog').click()
+            cy.get('#title').type('test title blog')
+            cy.get('#author').type('test author')
+            cy.get('#url').type('https://url.test.com')
+            cy.get('#create-button').click()
+            cy.contains('test title blog')
+        })
+    })
 })
