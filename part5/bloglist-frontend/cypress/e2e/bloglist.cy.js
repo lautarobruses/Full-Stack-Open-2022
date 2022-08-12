@@ -65,10 +65,12 @@ describe('Blog app', function() {
 
         it('A blog can be created', function() {
             cy.contains('new blog').click()
+
             cy.get('#title').type('test title blog')
             cy.get('#author').type('test author')
             cy.get('#url').type('https://url.test.com')
             cy.get('#create-button').click()
+
             cy.contains('test title blog')
         })
 
@@ -97,19 +99,32 @@ describe('Blog app', function() {
             it('A blog can be removed only by its user', function () {
                 cy.get('#view-hide-button').click()
                 cy.get('#remove-button').click()
+
+                cy.get('#logout-button').click()
             })
         })
 
         describe('and several blogs exist', function() {
             beforeEach(function () {
-                cy.createBlog({ title: 'fist blog', author: 'first author', url: 'first url', likes: 9 })
-                cy.createBlog({ title: 'second blog', author: 'second author', url: 'second url', likes: 5 })
                 cy.createBlog({ title: 'third blog', author: 'third author', url: 'third url', likes: 3 })
+                cy.createBlog({ title: 'second blog', author: 'second author', url: 'second url', likes: 8 })
                 cy.createBlog({ title: 'fourth blog', author: 'fourth author', url: 'fourth url', likes: 0 })
+                cy.createBlog({ title: 'first blog', author: 'first author', url: 'first url', likes: 9 })
             })
 
-            it('', function () {
+            it('and they are ordered according to likes with the most liked first', async function () {
+                cy.get('.blog').eq(0).should('contain', 'first blog')
+                cy.get('.blog').eq(1).should('contain', 'second blog').as('theSecond')
+                cy.get('.blog').eq(2).should('contain', 'third blog')
+                cy.get('.blog').eq(3).should('contain', 'fourth blog')
 
+                cy.get('@theSecond').find('#view-hide-button').click()
+                cy.get('@theSecond').find('#like-button').click()
+                cy.get('@theSecond').find('#like-button').click()
+                cy.get('@theSecond').find('#view-hide-button').click()
+
+                cy.get('.blog').eq(0).should('contain', 'second blog')
+                cy.get('.blog').eq(1).should('contain', 'first blog')
             })
         })
     })

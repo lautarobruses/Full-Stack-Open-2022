@@ -28,7 +28,7 @@ describe('<Blog />', () => {
     })
 
     test('at start url and number of likes are not displayed', () => {
-        const div = container.querySelector('.togglableContent')
+        const div = container.querySelector('#togglableContent')
         expect(div).toHaveStyle('display: none')
     })
 
@@ -37,7 +37,7 @@ describe('<Blog />', () => {
         const button = screen.getByText('view')
         await user.click(button)
 
-        const div = container.querySelector('.togglableContent')
+        const div = container.querySelector('#togglableContent')
         expect(div).not.toHaveStyle('display: none')
     })
 
