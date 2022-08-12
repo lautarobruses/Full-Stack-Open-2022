@@ -23,7 +23,7 @@ const App = () => {
                 const sortedBlogs = blogs.sort((a, b) =>  b.likes - a.likes)
                 setBlogs(sortedBlogs)
             })
-    }, [/*blogs*/]) //<<==this parameter make infinite the Cypress test
+    }, [blogs.length]) //<<==this parameter make infinite the Cypress test
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -102,12 +102,15 @@ const App = () => {
         const result = window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)
 
         if (result) {
-            blogService.deleteIt(id)
-            setBlogs(blogs.filter(blog => blog.id !== id))
-            setNotification(`Removed ${blog.title}`)
-            setTimeout(() => {
-                setNotification(null)
-            }, 5000)
+            blogService
+                .deleteIt(id)
+                .then(() => {
+                    setBlogs(blogs.filter(blog => blog.id !== id))
+                    setNotification(`Removed ${blog.title}`)
+                    setTimeout(() => {
+                        setNotification(null)
+                    }, 5000)
+                })
         }
     }
 
@@ -133,7 +136,7 @@ const App = () => {
                 <div>
                     <p>
                         {user.name} logged in
-                        <button onClick={handleLogout}>logout</button>
+                        <button id='logout-button' onClick={handleLogout}>logout</button>
                     </p>
                     <Togglable buttonLabel='new blog' ref={blogFormRef}>
                         <BlogForm createBlog={addBlog}/>

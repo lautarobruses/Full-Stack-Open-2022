@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const Blog = ({ blog, username, increaseLikes, deleteBlog }) => {
     const [ detailsVisible, setDetailsVisible ] = useState(false)
+    const [ userCorrect, setUserCorrect ] = useState()
     const [ buttonLabel, setButtonLabel ] = useState('view')
     const blogStyle = {
         paddingTop: 10,
@@ -10,6 +11,11 @@ const Blog = ({ blog, username, increaseLikes, deleteBlog }) => {
         borderWidth: 2,
         marginBottom: 5
     }
+
+    useEffect(() => {
+        setUserCorrect(username === blog.user.username ? true : false)
+    }, [])
+
 
     const toggleVisibility = (event) => {
         event.preventDefault()
@@ -21,6 +27,7 @@ const Blog = ({ blog, username, increaseLikes, deleteBlog }) => {
     }
 
     const showWhenVisible = { display: detailsVisible ? '' : 'none' }
+    const shownWhenUserCorrect = { display: userCorrect ? '' : 'none' }
 
     return (
         <div style={blogStyle} className='blog'>
@@ -35,7 +42,7 @@ const Blog = ({ blog, username, increaseLikes, deleteBlog }) => {
                     <button id='like-button' onClick={increaseLikes}>like</button>
                 </div>
                 <p>{blog.user.username}</p>
-                {username === blog.user.username && <button onClick={deleteBlog}>remove</button>}
+                <button id='remove-button' style={shownWhenUserCorrect} onClick={deleteBlog}>remove</button>
             </div>
         </div>
     )
