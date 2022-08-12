@@ -30,14 +30,16 @@ blogsRouter.post('/', userExtractor, async (request, response) => {
 })
 
 blogsRouter.delete('/:id', userExtractor, async (request, response) => {
-    const blog = await Blog.findById(request.params.id)
+    const blogToDelete = await Blog.findById(request.params.id)
+
+    if (!blogToDelete ) {
+        return response.status(204).end()
+    }
+
     const user = request.user
 
-    console.log(`blog: ${blog}`)
-    console.log(`user: ${user}`)
-
-    if (blog.user.toString() !== user.id.toString()) {
-        return response.status(401).json({ error: 'invalid token' })
+    if (blogToDelete.user.toString() !== user.id.toString()) {
+        return response.status(401).json({ error: 'only the creator can delete a blog' })
     }
 
     await Blog.findByIdAndRemove(request.params.id)

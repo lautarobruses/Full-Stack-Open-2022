@@ -17,13 +17,8 @@ const App = () => {
     const [error, setError] = useState(null)
 
     useEffect(() => {
-        blogService
-            .getAll()
-            .then(blogs => {
-                const sortedBlogs = blogs.sort((a, b) =>  b.likes - a.likes)
-                setBlogs(sortedBlogs)
-            })
-    }, [blogs.length]) //<<==this parameter make infinite the Cypress test
+        renderBlogs()
+    }, [])
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -34,6 +29,15 @@ const App = () => {
             blogService.setToken(user.token)
         }
     }, [])
+
+    const renderBlogs = () => {
+        blogService
+            .getAll()
+            .then(blogs => {
+                const sortedBlogs = blogs.sort((a, b) =>  b.likes - a.likes)
+                setBlogs(sortedBlogs)
+            })
+    }
 
     const handleLogin = async (event) => {
         event.preventDefault()
@@ -64,14 +68,17 @@ const App = () => {
 
     const addBlog = (blogObject) => {
         blogFormRef.current.toggleVisibility()
+
         blogObject.user = {
             name: user.name,
             username: user.username
         }
+
         blogService
             .create(blogObject)
             .then(returnedBlog => {
                 setBlogs(blogs.concat(returnedBlog))
+                renderBlogs()
                 setNotification(`added a new blog: ${returnedBlog.title} by ${returnedBlog.author}` )
                 setTimeout(() => {
                     setNotification(null)
@@ -94,6 +101,7 @@ const App = () => {
             .then(returnedBlog => {
                 const updatedBlogs = blogs.map(blog => blog.id !== id ? blog : returnedBlog)
                 setBlogs(updatedBlogs.sort((a, b) =>  b.likes - a.likes))
+                renderBlogs()
             })
     }
 
@@ -146,7 +154,7 @@ const App = () => {
                         <Blog
                             key={blog.id}
                             blog={blog}
-                            username={user.username}
+                            canRemove={user.username === blog.user.username}
                             increaseLikes={() => increaseLikesOf(blog.id)}
                             deleteBlog={() => deleteBlogOf(blog.id)}
                         />
