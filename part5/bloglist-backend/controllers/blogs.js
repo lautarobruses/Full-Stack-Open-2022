@@ -11,6 +11,10 @@ blogsRouter.get('/', async (request, response) => {
 })
 
 blogsRouter.post('/', userExtractor, async (request, response) => {
+    if (!request.user) {
+        return response.status(401).json({ error: 'token missing or invalid' })
+    }
+
     const body = request.body
     const user = request.user
 
@@ -59,7 +63,8 @@ blogsRouter.put('/:id', async (request, response) => {
         likes: body.likes
     }
 
-    const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true, runValidators: true })
+    const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true, runValidators: true, context: 'query' })
+
     response.json(updatedBlog)
 })
 
