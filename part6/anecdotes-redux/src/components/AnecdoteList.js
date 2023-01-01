@@ -1,8 +1,7 @@
 import React from "react"
-import { voteAnecdote } from '../reducers/anecdoteReducer'
 import { useSelector, useDispatch } from 'react-redux'
 
-const Anecdote = ({ anecdote, handleClick}) => {
+const Anecdote = ({ anecdote, handleClick }) => {
     return (
         <div key={anecdote.id}>
             <div>
@@ -15,25 +14,38 @@ const Anecdote = ({ anecdote, handleClick}) => {
     )
 }
 
-const AnecdoteList = () => {
-    const anecdotes = useSelector(state => 
-        state.sort((a, b) => {
-            return b.votes - a.votes
-    }))
-    const dispatch = useDispatch()
 
-    const vote = (id) => {
-      console.log('vote', id)
-      dispatch(voteAnecdote(id))
+const AnecdoteList = () => {
+    const anecdotes = useSelector(({ filter, anecdotes }) => {
+        if (filter === "")
+            return anecdotes
+        else
+            return anecdotes.filter(anecdote => {
+                const anecdoteLowerCase = anecdote.content.toLowerCase()
+                return anecdoteLowerCase.includes(filter.toLowerCase())
+            })
+    })
+    // ↓ Use to sort the anecdotes in order of the votes
+    const getItems = anecdotes => anecdotes
+    const items = [...getItems(anecdotes)]
+    items.sort((a, b) => b.votes - a.votes)
+    const dispatch = useDispatch()
+    //
+    const handleVote = ({ id, content }) => {
+        dispatch({ type: "anecdotes/voteAnecdote", payload:id })
+        dispatch({ type: "notification/showVotedAnecdote", payload:content })
+        setTimeout(() => {
+            dispatch({ type: "notification/deleteNotification", payload:null })
+        }, 5000)
     }
 
     return (
         <>
-            {anecdotes.map(anecdote =>
+            {items.map(anecdote =>
                 <Anecdote 
                     key={anecdote.id}
                     anecdote={anecdote}
-                    handleClick={() => vote(anecdote.id)}
+                    handleClick={() => handleVote(anecdote)}
                 />
             )}
         </>
