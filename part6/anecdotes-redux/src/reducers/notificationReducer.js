@@ -13,8 +13,7 @@ const notificationSlice = createSlice({
             return 'you voted "' + message + '"'
         },
         deleteNotification(state, action) {
-            const message = action.payload
-            return message
+            return null
         }
     },
 })
