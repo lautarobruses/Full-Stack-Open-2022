@@ -1,7 +1,6 @@
 import React from "react"
-import { useSelector, useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import { updatedAnecdote } from "../reducers/anecdoteReducer"
-import { setNotification } from "../reducers/notificationReducer"
 
 const Anecdote = ({ anecdote, handleClick }) => {
     return (
@@ -16,28 +15,12 @@ const Anecdote = ({ anecdote, handleClick }) => {
     )
 }
 
-
-const AnecdoteList = () => {
-    const anecdotes = useSelector(({ filter, anecdotes }) => {
-        if (filter === "")
-            return anecdotes
-        else
-            return anecdotes.filter(anecdote => {
-                const anecdoteLowerCase = anecdote.content.toLowerCase()
-                return anecdoteLowerCase.includes(filter.toLowerCase())
-            })
-    })
+const AnecdoteList = (props) => {
     // ↓ Use to sort the anecdotes in order of the votes
-    const getItems = anecdotes => anecdotes
-    const items = [...getItems(anecdotes)]
+    const getItems = anecdotes => props.anecdotes
+    const items = [...getItems(props.anecdotes)]
     items.sort((a, b) => b.votes - a.votes)
     //
-    const dispatch = useDispatch()
-
-    const handleVote = (anecdote) => {
-        dispatch(updatedAnecdote(anecdote))
-        dispatch(setNotification(`you voted '${anecdote.content}'`, 5))
-    }
 
     return (
         <>
@@ -45,11 +28,34 @@ const AnecdoteList = () => {
                 <Anecdote 
                     key={anecdote.id}
                     anecdote={anecdote}
-                    handleClick={() => handleVote(anecdote)}
+                    handleClick={() => props.updatedAnecdote(anecdote)}
                 />
             )}
         </>
     )
 }
 
-export default AnecdoteList
+const mapStateToProps = (state) => {
+    if (state.filter === "")
+            return {
+                anecdotes: state.anecdotes
+            }
+        else
+            return {
+                anecdotes: state.anecdotes.filter(anecdote => {
+                    const anecdoteLowerCase = anecdote.content.toLowerCase()
+                    return anecdoteLowerCase.includes(state.filter.toLowerCase())
+                })
+            }
+}
+
+const mapDispatchToProps = {
+    updatedAnecdote,
+}
+
+const ConnectedAnecdotes = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AnecdoteList)
+
+export default ConnectedAnecdotes
