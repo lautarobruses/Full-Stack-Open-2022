@@ -30,7 +30,6 @@ const App = () => {
         setTimeout(() => {
             setNotification('')
         }, 5000)
-        console.log(notification)
     }
 
     const anecdoteById = (id) =>
