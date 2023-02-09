@@ -1,24 +1,28 @@
+/* eslint-disable no-undef */
 module.exports = {
     'env': {
         'browser': true,
-        'es6': true,
-        'jest/globals': true,
-        'cypress/globals': true
-    },
+        'commonjs': true,
+        'es2021': true,
+        'jest': true,
+      },
     'extends': [
         'eslint:recommended',
-        'plugin:react/recommended',
-        'plugin:react/jsx-runtime'
+        'plugin:react/recommended'
     ],
+    'overrides': [
+    ],
+    'parser': '@babel/eslint-parser',
     'parserOptions': {
-        'ecmaFeatures': {
-            'jsx': true
+        'requireConfigFile': false,
+        'ecmaVersion': 'latest',
+        'sourceType': 'module',
+        'babelOptions': {
+            "presets": ["@babel/preset-react"]
         },
-        'ecmaVersion': 2018,
-        'sourceType': 'module'
     },
     'plugins': [
-        'react', 'jest', 'cypress'
+        'react'
     ],
     'rules': {
         'indent': [
@@ -46,11 +50,10 @@ module.exports = {
             'error', { 'before': true, 'after': true }
         ],
         'no-console': 0,
-        'react/prop-types': 0
-    },
-    'settings': {
-        'react': {
-            'version': '^18.2.0'
-        }
+        // suppress errors for missing 'import React' in files
+        "react/react-in-jsx-scope": "off",
+        // allow jsx syntax in js files (for next.js project)
+        "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }], //should add ".ts" if typescript project
+        "react/prop-types": 0
     }
 }

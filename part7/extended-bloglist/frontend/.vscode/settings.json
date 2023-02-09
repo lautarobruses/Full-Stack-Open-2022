@@ -2,5 +2,10 @@
     "cSpell.words": [
         "linebreak",
         "Togglable"
+    ],
+    "eslint.workingDirectories": [
+        {
+            "mode": "auto"
+        }
     ]
 }

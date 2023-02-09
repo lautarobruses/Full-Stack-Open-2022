@@ -12,14 +12,14 @@ it('when blog is created, callback has correct data', () => {
         author: 'Kalle Ilves',
         title: 'Testing is pretty easy',
         url: 'https://testing-library.com/docs/react-testing-library/intro/',
-        likes: 0
+        likes: 0,
     }
 
     const authorInput = screen.getByPlaceholderText('author of the blog')
     userEvent.type(authorInput, blogToCreate.author)
 
     const titleInput = screen.getByPlaceholderText('title of the blog')
-    userEvent.type(titleInput, blogToCreate. title)
+    userEvent.type(titleInput, blogToCreate.title)
 
     const urlInput = screen.getByPlaceholderText('url of the blog')
     userEvent.type(urlInput, blogToCreate.url)

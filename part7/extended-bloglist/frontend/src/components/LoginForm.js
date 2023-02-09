@@ -1,39 +1,48 @@
 import { useState } from 'react'
 
+import { useNavigate } from 'react-router-dom'
+
+import { Form, Button } from 'react-bootstrap'
+
 const LoginForm = ({ onLogin }) => {
+    const navigate = useNavigate()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+
+    const padding = {
+        padding: 10,
+        margin: 20
+    }
 
     const handleSubmit = (event) => {
         event.preventDefault()
         onLogin(username, password)
+        navigate('/blogs')
     }
 
     return (
-        <div>
+        <div className="container">
             <h2>Log in to application</h2>
-
             <form onSubmit={handleSubmit}>
-                <div>
-                    username
-                    <input
-                        value={username}
+                <Form.Group>
+                    <Form.Control
+                        type='text'
+                        name='username'
                         onChange={({ target }) => setUsername(target.value)}
-                        id='username'
+                        placeholder='username'
+                        style={padding}
                     />
-                </div>
-                <div>
-                    password
-                    <input
-                        type="password"
-                        value={password}
+                    <Form.Control
+                        type='password'
+                        name='password'
                         onChange={({ target }) => setPassword(target.value)}
-                        id="password"
+                        placeholder='password'
+                        style={padding}
                     />
-                </div>
-                <button id="login-button" type="submit">
-                    login
-                </button>
+                </Form.Group>
+                <Button variant='outline-primary' type='submit'>
+                    Login
+                </Button>
             </form>
         </div>
     )

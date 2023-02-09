@@ -1,11 +1,13 @@
 import { useState } from 'react'
 
+import { Form, Button } from 'react-bootstrap'
+
 const NewBlogForm = ({ onCreate }) => {
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const [url, setUrl] = useState('')
 
-    const handleSubmit = (event) => {
+    const handleCreate = (event) => {
         event.preventDefault()
         onCreate({ title, author, url, likes: 0 })
         setAuthor('')
@@ -14,41 +16,37 @@ const NewBlogForm = ({ onCreate }) => {
     }
 
     return (
-        <div>
+        <>
             <h2>Create new</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    title
-                    <input
-                        value={title}
+            <form onSubmit={handleCreate}>
+                <Form.Group>
+                    <Form.Label>title:</Form.Label>
+                    <Form.Control
+                        type='text'
+                        name='title'
                         onChange={({ target }) => setTitle(target.value)}
-                        id='title'
-                        placeholder='title of the blog'
+                        placeholder="title of the blog"
                     />
-                </div>
-                <div>
-                    author
-                    <input
-                        value={author}
+                    <Form.Label>author:</Form.Label>
+                    <Form.Control
+                        type='text'
+                        name='author'
                         onChange={({ target }) => setAuthor(target.value)}
-                        id='author'
-                        placeholder='author of the blog'
+                        placeholder="author of the blog"
                     />
-                </div>
-                <div>
-                    url
-                    <input
-                        value={url}
-                        onChange={({ target }) => setUrl(target.value)}
-                        id='url'
-                        placeholder='url of the blog'
+                    <Form.Label>url:</Form.Label>
+                    <Form.Control
+                        type='text'
+                        name='url'
+                        onChange={({ target }) => setAuthor(target.value)}
+                        placeholder="url of the blog"
                     />
-                </div>
-                <button id='create-butto' type='submit'>
-                    create
-                </button>
+                    <Button variant='outline-primary' type='submit'>
+                        Create
+                    </Button>
+                </Form.Group>
             </form>
-        </div>
+        </>
     )
 }
 
