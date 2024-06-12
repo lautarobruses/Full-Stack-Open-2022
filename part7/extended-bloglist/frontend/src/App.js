@@ -2,8 +2,8 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import LoginForm from './components/LoginForm'
-import Blogs from './components/blogs'
-import User from './components/user'
+import Blogs from './components/Blogs'
+import User from './components/User'
 import Blog from './components/Blog'
 import Users from './components/Users'
 import Notification from './components/Notification'
@@ -41,6 +41,8 @@ const App = () => {
         dispatch(initializeLoged())
         navigate('/blogs')
     }, [dispatch])
+
+    console.log(logedUser)
 
     const login = (username, password) => {
         dispatch(loginUser(username, password))

@@ -8,7 +8,7 @@ browser->server: https://studies.cs.helsinki.fi/exampleapp/spa.j
 server-->browser: spa.js
 
 note over browser:
-browser starts executing js-code
+Browser starts executing js-code
 that requests JSON data from server 
 end note
 
@@ -16,6 +16,6 @@ browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
 server-->browser: data.json
 
 note over browser:
-browser executes the event handler
+Browser executes the event handler
 that renders notes to display
 end note

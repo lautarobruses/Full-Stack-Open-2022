@@ -1,17 +1,17 @@
 title Exercise 0.4
 
 note over browser
-The user types something in the text field
+The user writes something in the text field
 end note
 
 note over browser
-When the form button is clicked, 
+When the "Save" button is clicked, 
 the browser will send the user 
 input to the server
 end note
 
 browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
-server-->browser: Status Code: 302
+server-->browser: Status Code: 302 Found
 
 browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
 server-->browser: HTML-code
@@ -20,9 +20,9 @@ server-->browser: main.css
 browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
 server-->browser: main.js
 browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
-server-->browser: [{"content":"nano","date":"2022-07-08T14:59:17.882Z"}, ...]
+server-->browser: [{content: "Bonjour!", date: "2024-06-12T13:35:48.845Z"}, ...]
 
 note over browser:
-browser executes the event handler
+Browser executes the event handler
 that renders notes to display
 end note

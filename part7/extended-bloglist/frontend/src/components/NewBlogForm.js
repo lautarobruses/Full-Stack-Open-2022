@@ -38,7 +38,7 @@ const NewBlogForm = ({ onCreate }) => {
                     <Form.Control
                         type='text'
                         name='url'
-                        onChange={({ target }) => setAuthor(target.value)}
+                        onChange={({ target }) => setUrl(target.value)}
                         placeholder="url of the blog"
                     />
                     <Button variant='outline-primary' type='submit'>

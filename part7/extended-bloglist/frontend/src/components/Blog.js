@@ -10,10 +10,6 @@ import { createNotification } from '../reducers/notificationReducer'
 import { increaseLikes, removeBlog } from '../reducers/blogReducer'
 import { initializeComments } from '../reducers/commentReducer'
 
-
-
-
-
 const Blog = ({ blog, user, blogs }) => {
     const dispatch = useDispatch()
     const navigate = useNavigate()

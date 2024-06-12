@@ -23,7 +23,7 @@ const getUser = () => {
 }
 
 const clearUser = () => {
-    localStorage.clear()
+    window.localStorage.clear()
     token = null
 }
 

@@ -1,7 +1,7 @@
 title Exercise 0.6
 
 note over browser
-The user types something in the text field
+The user writes something in the text field
 end note
 
 note over browser
@@ -11,4 +11,4 @@ input to the server
 end note
 
 browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
-server-->browser: {content: "Nota nueva", date: "2022-07-08T22:47:14.586Z"}
+server-->browser: {content: "New note", date: "2024-06-12T22:57:58.021Z"}
