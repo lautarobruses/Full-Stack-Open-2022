@@ -1,9 +1,9 @@
-import React from 'react'
-//import ReactDOM from 'react-dom'
-import { createRoot } from 'react-dom/client'; //Render in React 18
+// import { useState } from 'react'
 
 const App = () => {
-  const course = {
+  // const [count, setCount] = useState(0)
+
+	const course = {
     name: 'Half Stack application development',
     parts: [
       {
@@ -22,16 +22,16 @@ const App = () => {
   }
 
   return (
-    <div>
+    <>
       <Header course={course.name} />
       <Content parts={course.parts} />
       <Total parts={course.parts} />
-    </div>
+    </>
   )
 }
 
 const Header = (props) => {
-  return <h1>{props.course}</h1>
+  return <h1>{props.header}</h1>
 }
 
 const Content = (props) => {
@@ -45,7 +45,7 @@ const Content = (props) => {
 }
 
 const Total = (props) => {
-  return (
+	return (
     <p>Number of exercises {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}</p>
   )
 }
@@ -54,13 +54,8 @@ const Part = (props) => {
   return (
     <p>
         {props.part} {props.exercise}
-      </p>
+    </p>
   )
 }
 
-//ReactDOM.render(<App />, document.getElementById('root'))
-
-//Render in React 18
-const container = document.getElementById('root');
-const root = createRoot(container);
-root.render(<App />);
+export default App
